@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.wx.dao.WxMpDao">
+    
+	<sql id="wxMpColumns">
+		a.id AS "id",
+		a.mpcname AS "mpcname",
+		a.mpname AS "mpname",
+		a.appname AS "appname",
+		a.status AS "status",
+		a.appid AS "appid",
+		a.appsecret AS "appsecret",
+		a.opentoken AS "opentoken",
+		a.codeurl AS "codeurl",
+		a.openserverurl AS "openserverurl",
+		a.secuteflag AS "secuteflag",
+		a.userdatatype AS "userdatatype",
+		a.openaeskey AS "openaeskey",
+		a.subrespmsg AS "subrespmsg",
+		a.inmpmsg AS "inmpmsg",
+		a.username AS "username",
+		a.mobile AS "mobile",
+		a.appveridlist AS "appveridlist",
+		a.createtime AS "createtime",
+		a.mpdesc AS "mpdesc"
+	</sql>
+	
+	<sql id="wxMpJoins">
+	</sql>
+    
+	<select id="get" resultType="WxMp">
+		SELECT 
+			<include refid="wxMpColumns"/>
+		FROM wx_mp a
+		<include refid="wxMpJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="WxMp">
+		SELECT 
+			<include refid="wxMpColumns"/>
+		FROM wx_mp a
+		<include refid="wxMpJoins"/>
+		<where>
+			
+			<if test="mpname != null and mpname != ''">
+				AND a.mpname = #{mpname}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+			<if test="appid != null and appid != ''">
+				AND a.appid = #{appid}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="WxMp">
+		SELECT 
+			<include refid="wxMpColumns"/>
+		FROM wx_mp a
+		<include refid="wxMpJoins"/>
+		<where>
+			
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO wx_mp(
+			mpname,
+			appname,
+			status,
+			appid,
+			appsecret,
+			opentoken,
+			codeurl,
+			openserverurl,
+			secuteflag,
+			userdatatype,
+			openaeskey,
+			subrespmsg,
+			inmpmsg,
+			username,
+			mobile,
+			appveridlist,
+			createtime,
+			mpdesc
+		) VALUES (
+			#{mpname},
+			#{appname},
+			#{status},
+			#{appid},
+			#{appsecret},
+			#{opentoken},
+			#{codeurl},
+			#{openserverurl},
+			#{secuteflag},
+			#{userdatatype},
+			#{openaeskey},
+			#{subrespmsg},
+			#{inmpmsg},
+			#{username},
+			#{mobile},
+			#{appveridlist},
+			#{createtime},
+			#{mpdesc}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE wx_mp SET 	
+			mpname = #{mpname},
+			appname = #{appname},
+			status = #{status},
+			appid = #{appid},
+			appsecret = #{appsecret},
+			opentoken = #{opentoken},
+			codeurl = #{codeurl},
+			openserverurl = #{openserverurl},
+			secuteflag = #{secuteflag},
+			userdatatype = #{userdatatype},
+			openaeskey = #{openaeskey},
+			subrespmsg = #{subrespmsg},
+			inmpmsg = #{inmpmsg},
+			username = #{username},
+			mobile = #{mobile},
+			appveridlist = #{appveridlist},
+			createtime = #{createtime},
+			mpdesc = #{mpdesc}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		DELETE FROM wx_mp
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
